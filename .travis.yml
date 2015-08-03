@@ -26,6 +26,7 @@ install:
   - cd ..
 script:
   # install dependencies for tests e.g - pip install nose
+  - pip install matplotlib ipython
   - mkdir tmp_for_test
   - cd tmp_for_test
   # Run the tests
