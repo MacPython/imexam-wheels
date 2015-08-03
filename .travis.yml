@@ -3,8 +3,9 @@ language:
 env:
   global:
   - BUILD_COMMIT='latest-tag'  # comment out to build version in submodule
+  - REPO_DIR=imexam
   matrix:
-  - VERSION=2.7.9
+  - VERSION=2.7.10
   - VERSION=3.3.5
   - VERSION=3.4.3
 install:
@@ -12,9 +13,9 @@ install:
   - get_python_environment macpython $VERSION venv
   - pip install delocate
   - if [ -n "$BUILD_COMMIT" ]; then
-        checkout_commit imexam $BUILD_COMMIT;
+        checkout_commit $REPO_DIR $BUILD_COMMIT;
     fi
-  - cd imexam
+  - cd $REPO_DIR
   - python setup.py bdist_wheel
   - delocate-listdeps dist/*.whl # lists library dependencies
   - delocate-wheel dist/*.whl # copies library dependencies into wheel
@@ -26,13 +27,15 @@ script:
   - mkdir tmp_for_test
   - cd tmp_for_test
   # Run the tests
+  - python -c 'import imexam'
   - cd ..
-before_deploy: cd imexam/dist
+before_deploy: cd $REPO_DIR/dist
 deploy:
   provider: cloudfiles
   username: travis-worker
   api_key:
-    secure: ALZrkCwjz3nY/9GfTNPgVQHUmUpCc5SnZTaqIUlJrhVyOBu6aktXaRmQi+sTXzFn7a/PQsYDnoZ8nibCZ472oUVDGUOSbtjIEkPodU+aisLN2dSLNueQsUU7Dmt0SaeyJVGovzfyUiavIYLuAfOtCfUKrwAsi7XTVNQpdyWCQDs=
+    secure:
+        "crhRG8wvI4Q5AxdH4giBwHIOyn63Do6NBK7+aAUphFFVqHakYW+o/7E+b3vMO6n101Wd8AB0vun9cnNUQkcN4CnVnHIGJixzEWc3NLHKYdhURm1i4fPHqAioK7VFGsPYM7UoCVFMAcRa46dZyE/ffmnT5AHNhlQOAZ4rJtOxcsGEX1nrNOUAVgKPyCP0sEnLM7IZi5XT4xgubWes2DC22Z7eIUDC4sSotB7YyHUfwRFqpq/X30QtKOpdIFZZ5KtJYIjLbGVGr//VLe7yrrwxpo76RHKv8SwoxVTAmtbrrLylJVYR41G/IrjHvLgZPFztDO6iVAdz2LdsgQvw2onxzkINVIx8ShGZspVLoWyRLHJH2d6DAmwooPCBON6vrqtXXlCt0Ga8eBR3AYJ19ovSZ6NLbPZJxpmnHGCNYhuPVjEGRJX1I44obLhLdZwxpyi62FIUYfZfba2jcQyiPJc3UNduhryzEkXpUc5CwqiiBUcI8gYhMD4gp7ifqimWtYk7bHgIa3w/+5XZSRo+ltfdIWMZECngZ5G5ezpOhr43BB+vlE1UI0gFlMUpaTKFEmsvDWU/YPBW41W66m4PPsSmG11M/f0UhNUq4adMlUEPFyV4m1ZJ0NXLWjtXyvSCfQOBeqsx2ymaxU0cIlLTdae+TT+6zLlzPnOmJlbNB3RUlUg="
   region: ORD
   container: wheels
   skip_cleanup: true
