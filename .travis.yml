@@ -6,8 +6,9 @@ env:
   - REPO_DIR=imexam
   matrix:
   - VERSION=2.7.10
-  - VERSION=3.3.5
-  - VERSION=3.4.3
+  # Current tag'ed version not compatible with Python 3
+  # - VERSION=3.3.5
+  # - VERSION=3.4.3
 install:
   - source terryfy/travis_tools.sh
   - get_python_environment macpython $VERSION venv
