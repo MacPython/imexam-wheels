@@ -1,0 +1,6 @@
+[submodule "imexam"]
+	path = imexam
+	url = https://github.com/spacetelescope/imexam.git
+[submodule "terryfy"]
+	path = terryfy
+	url = git://github.com/MacPython/terryfy.git
