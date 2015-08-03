@@ -12,6 +12,8 @@ install:
   - source terryfy/travis_tools.sh
   - get_python_environment macpython $VERSION venv
   - pip install delocate
+  # These needed for v0.5 setup.py
+  - pip install astropy_helpers cython
   - if [ -n "$BUILD_COMMIT" ]; then
         checkout_commit $REPO_DIR $BUILD_COMMIT;
     fi
