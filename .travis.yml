@@ -30,8 +30,8 @@ script:
   - pip install matplotlib ipython
   - mkdir tmp_for_test
   - cd tmp_for_test
-  # Use matplotlib Agg backend
-  - echo "backend : agg" > matplotlibrc
+  # Use matplotlib Agg backend; defend line from travis-ci processing
+  - 'echo "backend : agg" > matplotlibrc'
   # Run the tests
   - python -c 'import imexam'
   - cd ..
